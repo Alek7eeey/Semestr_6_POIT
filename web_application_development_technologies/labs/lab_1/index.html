@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Lab_01</title>
+  </head>
+  <body>
+  <h1>Лабораторная работа 1</h1>
+  <div>
+    <a href="https://www.belstu.by/">БГТУ</a>
+   </div>
+   
+	<div>
+	<button onclick={getInfo()}>Информация про браузер</button>
+	</div>
+	
+	<div id="info">
+	<p id="info1"/>
+	<p id="info2"/>
+	<p id="info3"/>
+	<p id="info4"/>
+	</div>
+  </body>
+  
+  <script>
+	const getInfo=()=>{
+	let text = 'appCodeName = ' + navigator.appCodeName;
+	let text2 = 'userAgent = ' + navigator.userAgent;
+	let text3 = 'appName = ' + navigator.appName;
+	let text4 = 'appVersion = ' + navigator.appVersion;
+	document.getElementById('info1').innerText = text;
+	document.getElementById('info2').innerText = text2;
+	document.getElementById('info3').innerText = text3;
+	document.getElementById('info4').innerText = text4;
+	console.log('Hello World');
+	}
+  </script>
+</html>

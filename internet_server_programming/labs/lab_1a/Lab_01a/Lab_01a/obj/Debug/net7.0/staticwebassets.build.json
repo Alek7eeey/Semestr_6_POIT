@@ -1,0 +1,54 @@
+{
+  "Version": 1,
+  "Hash": "YMsisQd/SngFRlTcyCmmWju25opo+8FzjvT3ujRw1TA=",
+  "Source": "Lab_01a",
+  "BasePath": "_content/Lab_01a",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "Lab_01a\\wwwroot",
+      "Source": "Lab_01a",
+      "ContentRoot": "D:\\studing\\6_semestr\\internet_server_programming\\labs\\lab_1a\\Lab_01a\\Lab_01a\\wwwroot\\",
+      "BasePath": "_content/Lab_01a",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "D:\\studing\\6_semestr\\internet_server_programming\\labs\\lab_1a\\Lab_01a\\Lab_01a\\wwwroot\\calculate.html",
+      "SourceId": "Lab_01a",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\studing\\6_semestr\\internet_server_programming\\labs\\lab_1a\\Lab_01a\\Lab_01a\\wwwroot\\",
+      "BasePath": "_content/Lab_01a",
+      "RelativePath": "calculate.html",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\calculate.html"
+    },
+    {
+      "Identity": "D:\\studing\\6_semestr\\internet_server_programming\\labs\\lab_1a\\Lab_01a\\Lab_01a\\wwwroot\\calculateWithForm.html",
+      "SourceId": "Lab_01a",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\studing\\6_semestr\\internet_server_programming\\labs\\lab_1a\\Lab_01a\\Lab_01a\\wwwroot\\",
+      "BasePath": "_content/Lab_01a",
+      "RelativePath": "calculateWithForm.html",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\calculateWithForm.html"
+    }
+  ]
+}
