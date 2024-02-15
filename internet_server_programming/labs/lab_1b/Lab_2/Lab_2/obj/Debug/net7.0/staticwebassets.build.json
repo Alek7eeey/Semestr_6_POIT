@@ -1,0 +1,37 @@
+{
+  "Version": 1,
+  "Hash": "6Vv0En0miky88+H9+/sjhLXqcAY4lQUGujcBBUUlGxU=",
+  "Source": "Lab_2",
+  "BasePath": "_content/Lab_2",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "Lab_2\\wwwroot",
+      "Source": "Lab_2",
+      "ContentRoot": "D:\\studing\\6_semestr\\internet_server_programming\\labs\\lab_1b\\Lab_2\\Lab_2\\wwwroot\\",
+      "BasePath": "_content/Lab_2",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "D:\\studing\\6_semestr\\internet_server_programming\\labs\\lab_1b\\Lab_2\\Lab_2\\wwwroot\\index.html",
+      "SourceId": "Lab_2",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\studing\\6_semestr\\internet_server_programming\\labs\\lab_1b\\Lab_2\\Lab_2\\wwwroot\\",
+      "BasePath": "_content/Lab_2",
+      "RelativePath": "index.html",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\index.html"
+    }
+  ]
+}
