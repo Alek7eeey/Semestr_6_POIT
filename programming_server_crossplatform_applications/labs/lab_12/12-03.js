@@ -27,19 +27,18 @@ async function runTests() {
         await testDecr();
         console.timeEnd('DECR');
     } catch (error) {
-        console.error('Error during tests:', error);
+        console.error('Error tests:', error);
     } finally {
         client.quit().then(() => {
-            console.log('Connection closed');
+            console.log('-----------Connection closed-----------');
         }).catch((err) => {
             console.log('Error closing connection:', err);
         });
     }
 }
 
-// Подключаемся к Redis
 client.connect().then(async () => {
-    console.log('connect Redis');
+    console.log('-----------connect Redis-----------');
     await runTests();
 }).catch((err) => {
     console.log('connection error Redis:', err);

@@ -6,11 +6,13 @@ async function testHSet() {
         await client.hSet(i.toString(),`id:${i}`,`${JSON.stringify({val:`val-${i}`})}`);
     }
 }
+
 async function testHGet() {
     for (let i = 1; i <= 10000; i++) {
         await client.hGet(i.toString(), `id:${i}`);
     }
 }
+
 async function runTests() {
     try {
         console.time('HSET');
@@ -21,10 +23,10 @@ async function runTests() {
         await testHGet();
         console.timeEnd('HGET');
     } catch (error) {
-        console.error('Error during tests:', error);
+        console.error('Error tests:', error);
     } finally {
         client.quit().then(() => {
-            console.log('Connection closed');
+            console.log('-----------Connection closed-----------');
         }).catch((err) => {
             console.log('Error closing connection:', err);
         });
@@ -32,7 +34,7 @@ async function runTests() {
 }
 
 client.connect().then(async () => {
-    console.log('connect Redis');
+    console.log('-----------connect Redis-----------');
     await runTests();
 }).catch((err) => {
     console.log('connection error Redis:', err);
