@@ -1,0 +1,10 @@
+###
+@hostname = localhost
+@port = 7112
+GET https://{{hostname}}:{{port}}/Status/S200
+
+###
+GET https://{{hostname}}:{{port}}/Status/S300
+
+###
+GET https://{{hostname}}:{{port}}/Status/S500

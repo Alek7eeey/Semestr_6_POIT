@@ -79,18 +79,20 @@ CREATE TABLE Поощрения_и_наказания (
 CREATE TABLE Передвижения_по_должностям (
     ID NUMBER PRIMARY KEY,
     Сотрудник_ID NUMBER,
-    Должность NVARCHAR2(100),
+    Должность_ID NUMBER,
     Дата_начала DATE,
     Дата_окончания DATE,
+    FOREIGN KEY (Должность_ID) REFERENCES Должности(ID),
     FOREIGN KEY (Сотрудник_ID) REFERENCES Сотрудники(ID)
 );
 
 CREATE TABLE Передвижение_по_отделам (
     ID NUMBER PRIMARY KEY,
     Сотрудник_ID NUMBER,
-    Отдел NVARCHAR2(100),
+    Отдел_ID NUMBER,
     Дата_начала DATE,
     Дата_окончания DATE,
+    FOREIGN KEY (Отдел_ID) REFERENCES Отделы(ID),
     FOREIGN KEY (Сотрудник_ID) REFERENCES Сотрудники(ID)
 );
 
@@ -179,12 +181,12 @@ CREATE SEQUENCE seq_Поощрения_и_наказания START WITH 1 INCREM
 
 -- Для таблицы Передвижения_по_должностям
 CREATE INDEX idx_Передвижения_по_должностям_Сотрудник_ID ON Передвижения_по_должностям (Сотрудник_ID);
-CREATE VIEW v_Передвижения_по_должностям AS SELECT ID, Сотрудник_ID, Должность, Дата_начала, Дата_окончания FROM Передвижения_по_должностям;
+CREATE VIEW v_Передвижения_по_должностям AS SELECT ID, Сотрудник_ID, Должность_ID, Дата_начала, Дата_окончания FROM Передвижения_по_должностям;
 CREATE SEQUENCE seq_Передвижения_по_должностям START WITH 1 INCREMENT BY 1;
 
 -- Для таблицы Передвижение_по_отделам
 CREATE INDEX idx_Передвижение_по_отделам_Сотрудник_ID ON Передвижение_по_отделам (Сотрудник_ID);
-CREATE VIEW v_Передвижение_по_отделам AS SELECT ID, Сотрудник_ID, Отдел, Дата_начала, Дата_окончания FROM Передвижение_по_отделам;
+CREATE VIEW v_Передвижение_по_отделам AS SELECT ID, Сотрудник_ID, Отдел_ID, Дата_начала, Дата_окончания FROM Передвижение_по_отделам;
 CREATE SEQUENCE seq_Передвижение_по_отделам START WITH 1 INCREMENT BY 1;
 
 -- Для таблицы Повышение_квалификации
@@ -210,6 +212,7 @@ CREATE SEQUENCE seq_Паспорт START WITH 1 INCREMENT BY 1;
 /* Functions and procedures*/
 -- Процедура для добавления нового сотрудника
 CREATE OR REPLACE PROCEDURE ДобавитьСотрудника (
+    ID IN NUMBER,
     Имя IN NVARCHAR2,
     Фамилия IN NVARCHAR2,
     Образование_ID IN NUMBER,
@@ -217,9 +220,20 @@ CREATE OR REPLACE PROCEDURE ДобавитьСотрудника (
     Страховой_полюс_ID IN NUMBER,
     Пол IN NVARCHAR2
 ) AS
+    Сотрудник_Существует NUMBER;
 BEGIN
-    INSERT INTO Сотрудники (Имя, Фамилия, Образование_ID, Семейное_положение, Страховой_полюс_ID, Пол)
-    VALUES (Имя, Фамилия, Образование_ID, Семейное_положение, Страховой_полюс_ID, Пол);
+    SELECT COUNT(*) INTO Сотрудник_Существует FROM Сотрудники
+    WHERE ID = ID;
+
+    IF Сотрудник_Существует = 0 THEN
+        INSERT INTO Сотрудники (ID, Имя, Фамилия, Образование_ID, Семейное_положение, Страховой_полюс_ID, Пол)
+        VALUES (ID, Имя, Фамилия, Образование_ID, Семейное_положение, Страховой_полюс_ID, Пол);
+    ELSE
+        DBMS_OUTPUT.PUT_LINE('Сотрудник с таким ID уже существует.');
+    END IF;
+EXCEPTION
+    WHEN OTHERS THEN
+        DBMS_OUTPUT.PUT_LINE('Ошибка: ' || SQLERRM);
 END;
 /
 
@@ -227,8 +241,29 @@ END;
 CREATE OR REPLACE PROCEDURE УдалитьСотрудника (
     ID IN NUMBER
 ) AS
+    Сотрудник_Существует NUMBER;
 BEGIN
-    DELETE FROM Сотрудники WHERE ID = ID;
+    SELECT COUNT(*) INTO Сотрудник_Существует FROM Сотрудники WHERE ID = ID;
+
+    IF Сотрудник_Существует > 0 THEN
+        DELETE FROM Предыдущие_места_работы WHERE Сотрудник_ID = ID;
+        DELETE FROM Льготы WHERE Сотрудник_ID = ID;
+        DELETE FROM Справки WHERE Сотрудник_ID = ID;
+        DELETE FROM Отпуска WHERE Сотрудник_ID = ID;
+        DELETE FROM Командировки WHERE Сотрудник_ID = ID;
+        DELETE FROM Больничные WHERE Сотрудник_ID = ID;
+        DELETE FROM Поощрения_и_наказания WHERE Сотрудник_ID = ID;
+        DELETE FROM Передвижения_по_должностям WHERE Сотрудник_ID = ID;
+        DELETE FROM Передвижение_по_отделам WHERE Сотрудник_ID = ID;
+        DELETE FROM Повышение_квалификации WHERE Сотрудник_ID = ID;
+        DELETE FROM Паспорт WHERE сотрудник_ID = ID;
+        DELETE FROM Сотрудники WHERE ID = ID;
+    ELSE
+        DBMS_OUTPUT.PUT_LINE('Сотрудник с таким ID не существует.');
+    END IF;
+EXCEPTION
+    WHEN OTHERS THEN
+        DBMS_OUTPUT.PUT_LINE('Ошибка: ' || SQLERRM);
 END;
 /
 
@@ -242,3 +277,100 @@ BEGIN
     RETURN Количество;
 END;
 /
+
+CREATE OR REPLACE PROCEDURE ОбновитьСотрудника (
+    ID IN NUMBER,
+    НовоеИмя IN NVARCHAR2,
+    НоваяФамилия IN NVARCHAR2,
+    НовоеОбразование_ID IN NUMBER,
+    НовоеСемейное_положение IN NVARCHAR2,
+    НовыйСтраховой_полюс_ID IN NUMBER,
+    НовыйПол IN NVARCHAR2
+) AS
+    Сотрудник_Существует NUMBER;
+BEGIN
+    SELECT COUNT(*) INTO Сотрудник_Существует FROM Сотрудники WHERE ID = ID;
+
+    IF Сотрудник_Существует > 0 THEN
+        UPDATE Сотрудники
+        SET Имя = НовоеИмя,
+            Фамилия = НоваяФамилия,
+            Образование_ID = НовоеОбразование_ID,
+            Семейное_положение = НовоеСемейное_положение,
+            Страховой_полюс_ID = НовыйСтраховой_полюс_ID,
+            Пол = НовыйПол
+        WHERE ID = ID;
+    ELSE
+        DBMS_OUTPUT.PUT_LINE('Сотрудник с таким ID не существует.');
+    END IF;
+EXCEPTION
+    WHEN OTHERS THEN
+        DBMS_OUTPUT.PUT_LINE('Ошибка: ' || SQLERRM);
+END;
+/
+
+--global view
+CREATE VIEW Сотрудники_Образование AS
+SELECT С.Имя, С.Фамилия, О.Уровень, О.Специальность, О.Учебное_заведение
+FROM Сотрудники С
+JOIN Образование О ON С.Образование_ID = О.ID;
+
+CREATE VIEW Сотрудники_Страховой_полюс AS
+SELECT С.Имя, С.Фамилия, П.Номер_полюса, П.Страховая_компания
+FROM Сотрудники С
+JOIN Страховой_полюс П ON С.Страховой_полюс_ID = П.ID;
+
+
+CREATE OR REPLACE TRIGGER Триггер_Проверка_Отдела
+BEFORE INSERT ON Отделы
+FOR EACH ROW
+DECLARE
+    Количество_Сотрудников NUMBER;
+BEGIN
+    SELECT COUNT(*) INTO Количество_Сотрудников FROM Передвижение_по_отделам по WHERE по.Отдел_ID = :NEW.ID;
+
+    IF Количество_Сотрудников >= 100 THEN
+        RAISE_APPLICATION_ERROR(-20001, 'В одном отделе не может быть более 100 сотрудников.');
+    END IF;
+END;
+
+
+insert into KAD.СТРАХОВОЙ_ПОЛЮС(id, номер_полюса, страховая_компания)
+values (1, 3135, 'Belgosstrakh');
+
+insert into KAD.ОБРАЗОВАНИЕ(ID, УРОВЕНЬ, СПЕЦИАЛЬНОСТЬ, УЧЕБНОЕ_ЗАВЕДЕНИЕ)
+values (1, 'Высшее', 'ИТ', 'БГТУ');
+--ВЫЗОВ
+-- Вызов процедуры ДобавитьСотрудника
+BEGIN
+    KAD.ДобавитьСотрудника(1, 'Aleksey', 'Kravchenko', 1, 'Холост', 1, 'М' );
+END;
+/
+
+-- Вызов процедуры УдалитьСотрудника
+BEGIN
+    УдалитьСотрудника(1);
+END;
+/
+
+-- Вызов функции Количество_Сотрудников_с_Образованием
+DECLARE
+    Количество NUMBER;
+BEGIN
+    Количество := Количество_Сотрудников_с_Образованием(1);
+    DBMS_OUTPUT.PUT_LINE('Количество сотрудников с образованием ID 1: ' || Количество);
+END;
+/
+
+-- Вызов процедуры ОбновитьСотрудника
+BEGIN
+    ОбновитьСотрудника(1, 'Петр', 'Петров', 1, 'Не женат', 67890, 'М');
+END;
+/
+
+select * from Сотрудники_Образование;
+select *
+from СОТРУДНИКИ_СТРАХОВОЙ_ПОЛЮС;
+
+
+
