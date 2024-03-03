@@ -2,6 +2,11 @@ import { Model, Sequelize } from "sequelize";
 
 const sequelize = new Sequelize('KAD', 'student', 'fitfit', {
     host: '127.0.0.1',
+    hooks: {
+        beforeBulkDestroy: (faculty, options) => {
+            console.log('Before destroy hook triggered');
+        },
+    },
     dialect: 'mssql',
     dialectOptions: {
         options: {
@@ -10,6 +15,7 @@ const sequelize = new Sequelize('KAD', 'student', 'fitfit', {
         },
     },
 });
+
 
 class Faculty extends Model {}
 class Pulpit extends Model {}

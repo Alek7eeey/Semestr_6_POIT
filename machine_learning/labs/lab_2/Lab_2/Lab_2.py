@@ -1,119 +1,86 @@
+# 1. Выявите пропуски данных несколькими способами (визуальный,
+# расчетный…)
+# При удалении (замене) пропусков необходимо рассуждать: можно ли
+# удалить данный параметр и чем целесообразно заменять пропуски данных
+# в конкретных параметрах, руководствуясь описанием параметров
+# датасета и предметной областью.
+# 2. Исключите строки и столбцы с наибольшим количеством пропусков.
+# 3. Произведите замену оставшихся пропусков на логически обоснованные
+# значения.
+# 4. Постройте гистограмму распределения исходного датасета до и после
+# обработки пропусков. Сделайте выводы как обработка данных повлияла
+# на их распределение.
+# 5. Проверьте датасет на наличие выбросов, удалите найденные аномальные
+# записи.
+# 6. Приведите все параметры к числовому виду (кодирование текстовых
+# данных).
+# 7. Сохраните обработанный датасет
+
+# Dataset 'autoscout24-germany-dataset.csv'
+# mileage,make,model,fuel,gear,offerType,price,hp,year
 import pandas as pd
 import numpy as np
-import seaborn as sns
 import matplotlib.pyplot as plt
-import matplotlib.mlab as mlab
+import seaborn as sns
 
-dataset = pd.read_csv("D:/studing/6_semestr/machine_learning/labs/lab_2/final_book_dataset_kaggle2.csv")
+# Загрузка данных
+df = pd.read_csv('D:\\studing\\6_semestr\\machine_learning\\labs\\lab_2\\germany-dataset.csv')
 
-print(dataset.columns)
-print(dataset.head())
-
-# Гистограмма распределения исходного датасета до обработки пропусков
-plt.figure(figsize=(10, 6))
-plt.hist(dataset["price"], bins=10, color='blue', alpha=0.5)
-plt.xlabel("Price")
-plt.ylabel("Frequency")
-plt.title("Histogram of Price Distribution (Before Handling Missing Values)")
-plt.show()
-
-# Тепловая карта
-cols = dataset.columns[:]
+# 1. Выявим пропуски данных
+print('Пропуски данных (визуальный способ):')
+cols = df.columns[:]
+# определяем цвета
+# красный - пропущенные данные
 colours = ['#eeeeee', '#ff0000']
-plt.figure(figsize=(10, 6))
-sns.heatmap(dataset[cols].isnull(), cmap=sns.color_palette(colours))
+sns.heatmap(df[cols].isnull(), cmap=sns.color_palette(colours))
+print('Пропуски данных (расчетный способ):')
+print(df.isnull().sum())
+
+# 2. Удалим строки и столбцы с наибольшим количеством пропусков
+threshold = 0.5  # Пороговое значение для удаления
+plt.figure(figsize=(12, 6))
+plt.subplot(2, 2, 1)
+plt.title('Гистограмма "mileage" до обработки')
+plt.hist(df['mileage'], bins=20, alpha=0.7, color='blue')
+plt.subplot(2, 2, 3)
+plt.title('Гистограмма "price" до обработки')
+plt.hist(df['price'], bins=20, alpha=0.7, color='blue')
+df = df.dropna(axis=1, thresh=threshold * len(df))  # Удаление столбцов
+df = df.dropna(axis=0, thresh=threshold * len(df.columns))  # Удаление строк
+
+# 3. Замена пропусков на логически обоснованные значения
+# Замена в числовых столбцах на среднее значение
+numeric_cols = df.select_dtypes(include=[np.number]).columns
+df[numeric_cols] = df[numeric_cols].fillna(df[numeric_cols].mean())
+
+# 4. Построим гистограммы до и после обработки пропусков
+plt.subplot(2, 2, 2)
+plt.title('Гистограмма "mileage" после обработки')
+plt.hist(df['mileage'], bins=20, alpha=0.7, color='green')
+plt.subplot(2, 2, 4)
+plt.title('Гистограмма "price" после обработки')
+plt.hist(df['price'], bins=20, alpha=0.7, color='green')
+plt.tight_layout()
 plt.show()
 
-# Проверка на наличие нулевых значений
-print(dataset.isnull().any())
+# 5. Проверим наличие выбросов и удалим аномальные записи
+# Для примера, проверим 'mileage' на выбросы
+sns.boxplot(x=df['mileage'])
+# Определим границы выбросов
+Q1 = df['mileage'].quantile(0.25)
+Q3 = df['mileage'].quantile(0.75)
+IQR = Q3 - Q1
+lower_bound = Q1 - 1.5 * IQR
+upper_bound = Q3 + 1.5 * IQR
+# Удаление выбросов
+df = df[(df['mileage'] >= lower_bound) & (df['mileage'] <= upper_bound)]
 
-# Подсчет количество нулевых значений по столбцам
-for col in dataset.columns:
-    pct_missing = dataset[col].isnull().sum()
-    print('{} - {}'.format(col, round(pct_missing)))
+# 6. Приведем все параметры к числовому виду
+# Для этого заменим категориальные данные на числовые
+categorical_cols = ['make', 'model', 'fuel', 'gear', 'offerType']
+for col in categorical_cols:
+    if col in df.columns:
+        df[col] = df[col].astype('category').cat.codes
 
-# Подсчет процента нулевых значений по столбцам
-for col in dataset.columns:
-    pct_missing = np.mean(dataset[col].isnull())
-    print('{} - {}%'.format(col, round(pct_missing*100)))
-
-
-# Смотрим, что мы можем удалить без вреда
-# NaN есть практически во всех столбцах, кроме первого и двух последних
-# Будем удалять столбец weight (много причин, да и % у него относительно большой)
-dataset = dataset.drop(["weight"],axis=1)
-print(dataset.columns)
-print(dataset.head())
-
-# Пустые значения в поле price логично заменить на среднее
-dataset["price"] = dataset["price"].fillna(dataset["price"].mean())
-print(dataset["price"])
-
-# Пришло осознание (удаляем ненужное)
-dataset = dataset.drop(['dimensions','ISBN_13','price (including used books)','publisher','link','complete_link'],axis=1)
-dataset.head()
-
-# Тепловая карта
-cols = dataset.columns[:]
-colours = ['#eeeeee', '#ff0000']
-plt.figure(figsize=(10, 6))
-sns.heatmap(dataset[cols].isnull(), cmap=sns.color_palette(colours))
-plt.show()
-
-# Заменим текст числами
-# Датасет у меня плохой, особо текст на числа не заменить, но есть выход)))
-dataset['language'] = dataset['language'].map({'English': 1, 'Spanish': 2}).fillna(3)
-
-
-# Гистограмма распределения датасета после обработки пропусков
-plt.figure(figsize=(10, 6))
-plt.hist(dataset["price"], bins=10, color='green', alpha=0.5)
-plt.xlabel("Price")
-plt.ylabel("Frequency")
-plt.title("Histogram of Price Distribution (After Handling Missing Values)")
-plt.show()
-
-
-# До изменения (1 MB)
-print(dataset.dtypes)
-print(dataset.info(memory_usage='deep'))
-
-# =============================== Задание 5 ===============================
-top_10_prices = dataset["price"].nlargest(10)
-print(top_10_prices)
-
-# Определение списка столбцов, которые нужно проверить на выбросы
-columns_to_check = ['price']
-
-# Функция для удаления аномальных записей на основе IQR
-def remove_outliers_iqr(data, column):
-    Q1 = np.percentile(data[column], 25)
-    Q3 = np.percentile(data[column], 75)
-    IQR = Q3 - Q1
-    threshold = 1.5 * IQR
-    data = data[(data[column] >= Q1 - threshold) & (data[column] <= Q3 + threshold)]
-    return data
-
-# Цикл для проверки и удаления выбросов для каждого столбца
-for column in columns_to_check:
-    dataset = remove_outliers_iqr(dataset, columns_to_check)
-
-top_10_prices = dataset["price"].nlargest(10)
-print(top_10_prices)
-
-
-# =============================== Задание 6 ===============================
-# Список полей, которые вы хотите заменить на числовой тип данных
-fields_to_convert = ['price', 'avg_reviews', 'pages','n_reviews','star5', 'star4', 'star3', 'star2', 'star1']
-# Цикл для замены типа данных для каждого поля
-for field in fields_to_convert:
-    if dataset[field].dtype == object:  # Проверка, что тип данных поля является строковым
-        dataset[field] = pd.to_numeric(dataset[field].str.rstrip('%'), errors='coerce')
-
-
-# После изменения (116.8 KB)
-print(dataset.dtypes)
-print(dataset.info(memory_usage='deep'))
-
-
-dataset.to_csv("final_book_clear.csv")
+# 7. Сохраним обработанный датасет
+df.to_csv('processed_autoscout24_data.csv', index=False)

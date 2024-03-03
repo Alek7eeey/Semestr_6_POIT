@@ -39,26 +39,26 @@ Auditorium.scope('capacityRange').findAll()
     });
 
 Faculty.addHook("beforeCreate", (instance,options)=>{
-    console.log("///////////faculty beforeCreate/////////////");
+    console.log("faculty beforeCreate");
 })
 
 Faculty.addHook("afterCreate", (instance,options)=>{
-    console.log("////////////faculty afterCreate///////////");
+    console.log("faculty afterCreate");
 })
 
-Faculty.addHook("beforeDestroy", (instance, options) => {
-    console.log("///////////faculty beforeDestroy/////////////");
-});
+/*Sequelize.addHook('beforeDestroy', (instance, options) => {
+    console.log('beforeDestroy');
+});*/
 
 sequelize.authenticate()
     .then(()=>{
-        console.log("connected");
+        console.log("connected!");
         http.createServer((req,resp)=>{
-            let codeDelete=new RegExp("[A-Za-zА-Яа-я-]{0,6}",'g');
+            let codeDelete= new RegExp("[A-Za-zА-Яа-я-]{0,6}",'g');
 
             const urlPath = decodeURIComponent(url.parse(req.url).pathname);
             const pathSegments = urlPath.split('/');
-            //-------------------GET---------------------------------------------------------------------------
+            //-------------------GET--------------------------
             if (req.method=="GET"){
                 if (url.parse(req.url).pathname=="/"){
                     resp.writeHead(200,{"Content-Type":"text/html"});
@@ -127,8 +127,7 @@ sequelize.authenticate()
                         .then(table=>{resp.end(JSON.stringify(table));})
                         .catch(err=>{console.log(err); resp.end(JSON.stringify(err));})
                 }
-                else
-                if (pathSegments.length === 5 &&
+                else if (pathSegments.length === 5 &&
                     pathSegments[1] === 'api' &&
                     pathSegments[2] === 'auditoriumtypes'){
                     resp.writeHead(200,{"Content-Type":"application/json"});
@@ -145,8 +144,7 @@ sequelize.authenticate()
                         .catch(err=>{console.log(err); resp.end(JSON.stringify(err));})
                 }
             }
-            else
-            if (req.method=="POST"){
+            else if (req.method=="POST"){
                 if (url.parse(req.url).pathname=="/api/faculties"){
                     resp.writeHead(200,{"Content-Type":"application/json"});
                     let body = ' ';
@@ -163,8 +161,7 @@ sequelize.authenticate()
                             .catch(err=>{console.log(err); resp.end(JSON.stringify(err));})
                     })
                 }
-                else
-                if (url.parse(req.url).pathname=="/api/pulpits"){
+                else if (url.parse(req.url).pathname=="/api/pulpits"){
                     resp.writeHead(200,{"Content-Type":"application/json"});
                     let body = ' ';
                     req.on('data', chunk => {
@@ -181,8 +178,7 @@ sequelize.authenticate()
                             .catch(err=>{console.log(err); resp.end(JSON.stringify(err));})
                     })
                 }
-                else
-                if (url.parse(req.url).pathname=="/api/subjects"){
+                else if (url.parse(req.url).pathname=="/api/subjects"){
                     resp.writeHead(200,{"Content-Type":"application/json"});
                     let body = ' ';
                     req.on('data', chunk => {
@@ -199,8 +195,7 @@ sequelize.authenticate()
                             .catch(err=>{console.log(err); resp.end(JSON.stringify(err));})
                     })
                 }
-                else
-                if (url.parse(req.url).pathname=="/api/teachers"){
+                else if (url.parse(req.url).pathname=="/api/teachers"){
                     let body = '';
                     req.on('data', (chunk) => {
                         body += chunk;
@@ -218,8 +213,7 @@ sequelize.authenticate()
                         }
                     });
                 }
-                else
-                if (url.parse(req.url).pathname=="/api/auditoriumstypes"){
+                else if (url.parse(req.url).pathname=="/api/auditoriumstypes"){
                     resp.writeHead(200,{"Content-Type":"application/json"});
                     let body = ' ';
                     req.on('data', chunk => {
@@ -235,8 +229,7 @@ sequelize.authenticate()
                             .catch(err=>{console.log(err); resp.end(JSON.stringify(err));})
                     })
                 }
-                else
-                if (url.parse(req.url).pathname=="/api/auditoriums"){
+                else if (url.parse(req.url).pathname=="/api/auditoriums"){
                     resp.writeHead(200,{"Content-Type":"application/json"});
                     let body = ' ';
                     req.on('data', chunk => {
@@ -255,8 +248,7 @@ sequelize.authenticate()
                     })
                 }
             }
-            else
-            if (req.method=="PUT"){
+            else if (req.method=="PUT"){
                 if (url.parse(req.url).pathname=="/api/faculties"){
                     resp.writeHead(200,{"Content-Type":"application/json"});
                     let body = ' ';
@@ -287,8 +279,7 @@ sequelize.authenticate()
                             .catch(err=>{console.log(err); resp.end(JSON.stringify(err));})
                     })
                 }
-                else
-                if (url.parse(req.url).pathname=="/api/pulpits"){
+                else if (url.parse(req.url).pathname=="/api/pulpits"){
                     resp.writeHead(200,{"Content-Type":"application/json"});
                     let body = ' ';
                     req.on('data', chunk => {
@@ -319,8 +310,7 @@ sequelize.authenticate()
                             .catch(err=>{console.log(err); resp.end(JSON.stringify(err));})
                     })
                 }
-                else
-                if (url.parse(req.url).pathname=="/api/subjects"){
+                else if (url.parse(req.url).pathname=="/api/subjects"){
                     resp.writeHead(200,{"Content-Type":"application/json"});
                     let body = ' ';
                     req.on('data', chunk => {
@@ -351,8 +341,7 @@ sequelize.authenticate()
                             .catch(err=>{console.log(err); resp.end(JSON.stringify(err));})
                     })
                 }
-                else
-                if (url.parse(req.url).pathname=="/api/teachers"){
+                else if (url.parse(req.url).pathname=="/api/teachers"){
                     let body = '';
                     req.on('data', (chunk) => {
                         body += chunk;
@@ -370,8 +359,7 @@ sequelize.authenticate()
                         }
                     });
                 }
-                else
-                if (url.parse(req.url).pathname=="/api/auditoriumstypes"){
+                else if (url.parse(req.url).pathname=="/api/auditoriumstypes"){
                     resp.writeHead(200,{"Content-Type":"application/json"});
                     let body = ' ';
                     req.on('data', chunk => {
@@ -401,8 +389,7 @@ sequelize.authenticate()
                             .catch(err=>{console.log(err); resp.end(JSON.stringify(err));})
                     })
                 }
-                else
-                if (url.parse(req.url).pathname=="/api/auditoriums"){
+                else if (url.parse(req.url).pathname=="/api/auditoriums"){
                     resp.writeHead(200,{"Content-Type":"application/json"});
                     let body = ' ';
                     req.on('data', chunk => {
@@ -435,8 +422,7 @@ sequelize.authenticate()
                     })
                 }
             }
-            else
-            if (req.method=="DELETE"){
+            else if (req.method=="DELETE"){
                 if (url.parse(req.url).pathname.split("/")[2]=="faculties" &&
                     codeDelete.test(decodeURI(url.parse(req.url).pathname.split("/")[3]))){
                     resp.writeHead(200,{"Content-Type":"application/json"});
@@ -458,8 +444,7 @@ sequelize.authenticate()
                         })
                         .catch(err=>{console.log(err); resp.end(JSON.stringify(err));})
                 }
-                else
-                if (url.parse(req.url).pathname.split("/")[2]=="pulpits" && codeDelete.test(decodeURI(url.parse(req.url).pathname.split("/")[3]))){
+                else if (url.parse(req.url).pathname.split("/")[2]=="pulpits" && codeDelete.test(decodeURI(url.parse(req.url).pathname.split("/")[3]))){
                     resp.writeHead(200,{"Content-Type":"application/json"});
                     let code=decodeURI(url.parse(req.url).pathname.split("/")[3]);
 
@@ -481,8 +466,7 @@ sequelize.authenticate()
                         .catch(err=>{console.log(err); resp.end(JSON.stringify(err));})
 
                 }
-                else
-                if (url.parse(req.url).pathname.split("/")[2]=="teachers" && codeDelete.test(decodeURI(url.parse(req.url).pathname.split("/")[3]))){
+                else if (url.parse(req.url).pathname.split("/")[2]=="teachers" && codeDelete.test(decodeURI(url.parse(req.url).pathname.split("/")[3]))){
                     resp.writeHead(200,{"Content-Type":"application/json"});
                     let code=decodeURI(url.parse(req.url).pathname.split("/")[3]);
                     Teacher.findAll({
@@ -502,8 +486,7 @@ sequelize.authenticate()
                         })
                         .catch(err=>{console.log(err); resp.end(JSON.stringify(err));})
                 }
-                else
-                if (url.parse(req.url).pathname.split("/")[2]=="subjects" && codeDelete.test(decodeURI(url.parse(req.url).pathname.split("/")[3]))){
+                else if (url.parse(req.url).pathname.split("/")[2]=="subjects" && codeDelete.test(decodeURI(url.parse(req.url).pathname.split("/")[3]))){
                     resp.writeHead(200,{"Content-Type":"application/json"});
                     let code=decodeURI(url.parse(req.url).pathname.split("/")[3]);
                     Subject.findAll({
@@ -523,8 +506,7 @@ sequelize.authenticate()
                         })
                         .catch(err=>{console.log(err); resp.end(JSON.stringify(err));})
                 }
-                else
-                if (url.parse(req.url).pathname.split("/")[2]=="auditoriumstypes" && codeDelete.test(decodeURI(url.parse(req.url).pathname.split("/")[3]))){
+                else if (url.parse(req.url).pathname.split("/")[2]=="auditoriumstypes" && codeDelete.test(decodeURI(url.parse(req.url).pathname.split("/")[3]))){
                     resp.writeHead(200,{"Content-Type":"application/json"});
                     let code=decodeURI(url.parse(req.url).pathname.split("/")[3]);
                     Auditorium_type.findAll({
@@ -544,8 +526,7 @@ sequelize.authenticate()
                         })
                         .catch(err=>{console.log(err); resp.end(JSON.stringify(err));})
                 }
-                else
-                if (url.parse(req.url).pathname.split("/")[2]=="auditoriums" && codeDelete.test(decodeURI(url.parse(req.url).pathname.split("/")[3]))){
+                else if (url.parse(req.url).pathname.split("/")[2]=="auditoriums" && codeDelete.test(decodeURI(url.parse(req.url).pathname.split("/")[3]))){
                     resp.writeHead(200,{"Content-Type":"application/json"});
                     let code=decodeURI(url.parse(req.url).pathname.split("/")[3]);
                     Auditorium.findAll({
