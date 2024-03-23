@@ -8,7 +8,7 @@ namespace ASPCMVC02.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            return Redirect("https://localhost:7095/index.html");
         }
     }
 }

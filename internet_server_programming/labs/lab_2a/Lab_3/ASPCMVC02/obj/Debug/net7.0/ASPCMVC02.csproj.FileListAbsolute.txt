@@ -3,8 +3,6 @@ D:\studing\6_semestr\internet_server_programming\labs\lab_2a\Lab_3\ASPCMVC02\obj
 D:\studing\6_semestr\internet_server_programming\labs\lab_2a\Lab_3\ASPCMVC02\obj\Debug\net7.0\ASPCMVC02.AssemblyInfo.cs
 D:\studing\6_semestr\internet_server_programming\labs\lab_2a\Lab_3\ASPCMVC02\obj\Debug\net7.0\ASPCMVC02.csproj.CoreCompileInputs.cache
 D:\studing\6_semestr\internet_server_programming\labs\lab_2a\Lab_3\ASPCMVC02\obj\Debug\net7.0\ASPCMVC02.MvcApplicationPartsAssemblyInfo.cache
-D:\studing\6_semestr\internet_server_programming\labs\lab_2a\Lab_3\ASPCMVC02\obj\Debug\net7.0\ASPCMVC02.RazorAssemblyInfo.cache
-D:\studing\6_semestr\internet_server_programming\labs\lab_2a\Lab_3\ASPCMVC02\obj\Debug\net7.0\ASPCMVC02.RazorAssemblyInfo.cs
 D:\studing\6_semestr\internet_server_programming\labs\lab_2a\Lab_3\ASPCMVC02\bin\Debug\net7.0\appsettings.Development.json
 D:\studing\6_semestr\internet_server_programming\labs\lab_2a\Lab_3\ASPCMVC02\bin\Debug\net7.0\appsettings.json
 D:\studing\6_semestr\internet_server_programming\labs\lab_2a\Lab_3\ASPCMVC02\bin\Debug\net7.0\ASPCMVC02.staticwebassets.runtime.json

@@ -40,28 +40,15 @@ BEGIN
 END
 
 -- 4. Создание процедуры для перемещения подчиненных
+drop procedure MoveSubordinates;
 CREATE PROCEDURE dbo.MoveSubordinates
-    @oldManagerId int,
-    @newManagerId int
-AS
-BEGIN
-    IF NOT EXISTS(SELECT 1 FROM Сотрудники WHERE ID = @oldManagerId)
-        RAISERROR ('PARM1 | Сотрудник с id %s не существует', 16, 1, NULL);
-
-    IF NOT EXISTS(SELECT 1 FROM Сотрудники WHERE ID = @newManagerId)
-        RAISERROR ('PARM2 | Сотрудник с id %s не существует', 16, 1, NULL);
-
-    DECLARE @oldHierarchy HIERARCHYID = NULL;
-    DECLARE @newHierarchy HIERARCHYID = NULL;
-
-    SELECT @oldHierarchy = ManagerHierarchy FROM Сотрудники WHERE ID = @oldManagerId;
-    SELECT @newHierarchy = ManagerHierarchy FROM Сотрудники WHERE ID = @newManagerId;
-
-    UPDATE Сотрудники
-    SET ManagerHierarchy = @newHierarchy.GetDescendant(@oldHierarchy.GetAncestor(1), NULL)
-    WHERE ManagerHierarchy.GetAncestor(1) = @oldHierarchy
-END
-GO
+   @oldParent hierarchyid, @newParent hierarchyid
+as
+begin
+update Сотрудники
+set ManagerHierarchy = ManagerHierarchy.GetReparentedValue(@oldParent, @newParent)
+where ManagerHierarchy.IsDescendantOf(@oldParent) = 1
+end;
 
 --drop procedure dbo.MoveSubordinates
 
@@ -113,9 +100,9 @@ END
 -- Заполнение таблицы Сотрудники
 INSERT INTO Сотрудники (ID, Имя, Фамилия, Образование_ID, Семейное_положение, Страховой_полюс_ID, Пол, ManagerHierarchy)
 VALUES (1, 'Иван', 'Иванов', 2, 'Женат', 3, 'Мужской', hierarchyid::GetRoot()),
-       (2, 'Мария', 'Петрова', 3, 'Не замужем', 2, 'Женский', '/1/'),
+       (2, 'Мария', 'Петрова', 3, 'Не замужем', 2, 'Женский', '/2/2/'),
        (3, 'Алексей', 'Кравченко', 3, 'Холост', 2, 'Мужской', '/2/'),
-       (4, 'Дмитрий', 'Гайков', 3, 'Женат', 2, 'Мужской', '/2/2/');
+       (4, 'Дмитрий', 'Гайков', 3, 'Женат', 2, 'Мужской', '/3/');
 delete from Сотрудники where ID<5;
 
 -- Заполнение таблицы Образование
@@ -133,7 +120,7 @@ delete from Страховой_полюс where ID<4;
 -- Добавление подчиненного узла
 DECLARE @manager hierarchyid, @subordinateId int
 SELECT @manager = ManagerHierarchy FROM Сотрудники WHERE ID = 1
-SET @subordinateId = 3
+SET @subordinateId = 2
 EXEC dbo.AddSubordinate @manager, @subordinateId
 
 --вывод сотрудников
@@ -142,4 +129,5 @@ SELECT @manager = ManagerHierarchy FROM Сотрудники WHERE ID = 1
 EXEC dbo.GetSubordinates @manager
 
 -- Перемещение всех подчиненных
-EXEC dbo.MoveSubordinates 1,4
+EXEC dbo.MoveSubordinates '/2/','/1/'
+EXEC dbo.MoveSubordinates '/3/','/2/'

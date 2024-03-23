@@ -29,6 +29,7 @@ df = pd.read_csv('D:\\studing\\6_semestr\\machine_learning\\labs\\lab_2\\germany
 # 1. Выявим пропуски данных
 print('Пропуски данных (визуальный способ):')
 cols = df.columns[:]
+
 # определяем цвета
 # красный - пропущенные данные
 colours = ['#eeeeee', '#ff0000']

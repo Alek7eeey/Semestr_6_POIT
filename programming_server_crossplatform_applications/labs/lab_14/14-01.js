@@ -22,7 +22,6 @@ let http_handler = async (req, res) => {
             }
             let pulpits = await prisma.PULPIT.findMany({ skip: (o - 1) * 10, take: 10, include: { _count: { select: { TEACHER_TEACHER_PULPITToPULPIT: true } } } })
             if (pulpits.length != 0) {
-
                 res.end(JSON.stringify(pulpits));
             }
             else {

@@ -47,7 +47,16 @@ CREATE TABLE Отпуска (
     ID NUMBER PRIMARY KEY,
     Сотрудник_ID NUMBER,
     Дата_начала DATE,
+    Вид_отпуска NVARCHAR2(100),
     Дата_окончания DATE,
+    FOREIGN KEY (Сотрудник_ID) REFERENCES Сотрудники(ID)
+);
+
+CREATE TABLE Зарплаты (
+    ID INT PRIMARY KEY,
+    Сотрудник_ID NUMBER,
+    Зарплата DECIMAL(10, 2),
+    Дата DATE,
     FOREIGN KEY (Сотрудник_ID) REFERENCES Сотрудники(ID)
 );
 
