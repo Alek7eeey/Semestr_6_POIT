@@ -1,0 +1,10 @@
+﻿###
+@hostname = localhost
+@port = 7085
+GET https://{{hostname}}:{{port}}/it/213/sdfsjd
+
+###
+GET https://{{hostname}}:{{port}}/it/true/words
+
+###
+GET https://{{hostname}}:{{port}}/it/32.54/stri

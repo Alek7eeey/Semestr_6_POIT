@@ -21,6 +21,33 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.MapControllerRoute(
+	name: "M01",
+	pattern: "/{MResearch?}/{action}/{id?}",
+	defaults: new { controller = "MResearch", action = "M01" },
+	constraints: new { MResearch = "MResearch", action = "M01|M02", id = new Lab_2b.CustomValid() }
+);
+
+app.MapControllerRoute(
+	name: "V2",
+	pattern: "V2/{MResearch?}/{action}",
+	defaults: new { controller = "MResearch", action = "M02" },
+	constraints: new { action = "M01|M02", MResearch = "MResearch" }
+);
+
+app.MapControllerRoute(
+	name: "V3",
+	pattern: "V3/{MResearch?}/{str}/{action}",
+	defaults: new { controller = "MResearch", action = "M03", value = "" },
+	constraints: new { action = "M01|M02|M03", MResearch = "MResearch" }
+);
+
+app.MapControllerRoute(
+	name: "MXX",
+	pattern: "{*uri}",
+	defaults: new { controller = "MResearch", action = "MXX" });
+
+/*
+app.MapControllerRoute(
     name: "V2",
     pattern: "V2/{controller}/{action}",
     defaults: new { controller = "MResearch", action = "M02" });
@@ -40,4 +67,5 @@ app.MapControllerRoute(
     defaults: new { controller = "MResearch", action = "MXX" }
 );
 
+*/
 app.Run();
