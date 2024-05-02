@@ -1,2 +1,0 @@
-https://developers.google.com/identity/oauth2/web/guides/get-google-api-clientid?hl=ru
-https://console.cloud.google.com/apis/credentials?hl=ru&project=taskwave-896e6

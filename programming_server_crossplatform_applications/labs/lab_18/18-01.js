@@ -6,7 +6,7 @@ import { OAuth2Strategy as GoogleStrategy } from 'passport-google-oauth';
 
 passport.use(new GoogleStrategy({
             clientID: '349897640518-im76fe239qslprenkqa1tpmhlnt9ogcq.apps.googleusercontent.com',
-            clientSecret: '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',
+            clientSecret: '*****************',
             callbackURL: 'http://localhost:3000/auth/google/callback',
         },
         function (accessToken, refreshToken, profile, cb) {
