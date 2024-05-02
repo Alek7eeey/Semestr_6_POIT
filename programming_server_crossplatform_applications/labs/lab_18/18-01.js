@@ -5,7 +5,7 @@ import session from 'express-session';
 import { OAuth2Strategy as GoogleStrategy } from 'passport-google-oauth';
 
 passport.use(new GoogleStrategy({
-            clientID: '349897640518-im76fe239qslprenkqa1tpmhlnt9ogcq.apps.googleusercontent.com',
+            clientID: '********************.apps.googleusercontent.com',
             clientSecret: '*****************',
             callbackURL: 'http://localhost:3000/auth/google/callback',
         },
