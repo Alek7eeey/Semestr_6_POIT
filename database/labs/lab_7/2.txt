@@ -1,0 +1,26 @@
+SELECT *
+FROM (
+    SELECT 
+        Зарплаты.Дата,
+        Передвижение_по_отделам.Отдел_ID,
+        AVG(Зарплаты.Зарплата) OVER (PARTITION BY Передвижение_по_отделам.Отдел_ID, TO_CHAR(Зарплаты.Дата, 'YYYY-MM')) AS Средняя_зарплата
+    FROM 
+        Зарплаты
+    JOIN 
+        Сотрудники ON Зарплаты.Сотрудник_ID = Сотрудники.ID
+    JOIN 
+        Передвижение_по_отделам ON Сотрудники.ID = Передвижение_по_отделам.Сотрудник_ID
+)
+MATCH_RECOGNIZE (
+    PARTITION BY Отдел_ID
+    ORDER BY Дата
+    MEASURES 
+        FIRST(Дата) AS Начало,
+        LAST(Дата) AS Конец
+    ONE ROW PER MATCH
+    AFTER MATCH SKIP TO NEXT ROW
+    PATTERN (Рост Падение Рост)
+    DEFINE 
+        Рост AS Средняя_зарплата > PREV(Средняя_зарплата),
+        Падение AS Средняя_зарплата < PREV(Средняя_зарплата)
+);

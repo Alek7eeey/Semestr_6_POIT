@@ -37,8 +37,8 @@ app.MapControllerRoute(
 app.MapControllerRoute(
 	name: "V3",
 	pattern: "V3/{MResearch?}/{str}/{action}",
-	defaults: new { controller = "MResearch", action = "M03", value = "" },
-	constraints: new { action = "M01|M02|M03", MResearch = "MResearch" }
+	defaults: new { controller = "MResearch", action = "M03", str=""},
+	constraints: new {V3 = new Lab_2b.CustomValidTwo(), action = "M01|M02|M03", MResearch = "MResearch" }
 );
 
 app.MapControllerRoute(

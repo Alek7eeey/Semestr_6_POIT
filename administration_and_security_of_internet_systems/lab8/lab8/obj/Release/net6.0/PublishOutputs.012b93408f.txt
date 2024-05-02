@@ -1,0 +1,7 @@
+D:\studing\6_semestr\administration_and_security_of_internet_systems\lab8\lab8\obj\Release\net6.0\PubTmp\Out\lab8.exe
+D:\studing\6_semestr\administration_and_security_of_internet_systems\lab8\lab8\obj\Release\net6.0\PubTmp\Out\appsettings.Development.json
+D:\studing\6_semestr\administration_and_security_of_internet_systems\lab8\lab8\obj\Release\net6.0\PubTmp\Out\appsettings.json
+D:\studing\6_semestr\administration_and_security_of_internet_systems\lab8\lab8\obj\Release\net6.0\PubTmp\Out\lab8.dll
+D:\studing\6_semestr\administration_and_security_of_internet_systems\lab8\lab8\obj\Release\net6.0\PubTmp\Out\lab8.deps.json
+D:\studing\6_semestr\administration_and_security_of_internet_systems\lab8\lab8\obj\Release\net6.0\PubTmp\Out\lab8.runtimeconfig.json
+D:\studing\6_semestr\administration_and_security_of_internet_systems\lab8\lab8\obj\Release\net6.0\PubTmp\Out\lab8.pdb

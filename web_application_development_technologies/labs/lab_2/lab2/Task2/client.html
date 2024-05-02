@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Random Number Generator</title>
+</head>
+<body>
+  <h1>Random Number Generator</h1>
+  <label for="n">Enter value for N:</label>
+  <input type="number" id="n">
+  <button onclick="generateRandomNumbers()">Generate</button>
+  <p id="result"></p>
+
+  <script>
+    const generateRandomNumbers = () =>{
+      const n = document.getElementById('n').value;
+      const xhr = new XMLHttpRequest();
+      xhr.open('POST', 'http://localhost:3000/', true);
+      
+      xhr.setRequestHeader('X-Rand-N', n);
+
+      xhr.onload = function() {
+        if (xhr.status === 200) {
+          // Предполагаем, что ответ от сервера в формате JSON
+          const data = JSON.parse(xhr.responseText);
+          document.getElementById('result').innerText = JSON.stringify(data);
+        } else {
+          console.error('Error:', xhr.statusText);
+          document.getElementById('result').innerText = 'Error occurred. Please try again.';
+        }
+      };
+
+      xhr.onerror = function() {
+        console.error('Network error');
+        document.getElementById('result').innerText = 'Network error. Please try again.';
+      };
+
+      xhr.send();
+    }
+  </script>
+</body>
+</html>

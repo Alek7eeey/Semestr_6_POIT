@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sum and Random Number Generator</title>
+</head>
+<body>
+  <h1>Sum Calculator</h1>
+  <label for="x">Value of x:</label>
+  <input type="number" id="x">
+  <br>
+  <label for="y">Value of y:</label>
+  <input type="number" id="y">
+  <br>
+  <button onclick="calculateSum()">Calculate Sum</button>
+  <p id="sumResult"></p>
+  
+  <h1>Random Number Generator</h1>
+  <label for="n">Enter value for N:</label>
+  <input type="number" id="n">
+  <button onclick="generateRandomNumbers()">Generate</button>
+  <p id="randomResult"></p>
+
+  <h1>С</h1>
+  <label for="xC">Value of x:</label>
+  <input type="number" id="xC">
+  <br>
+  <label for="yC">Value of y:</label>
+  <input type="number" id="yC">
+  <br>
+  <p id="sumResultC"></p>
+  <label for="nC">Enter value for N:</label>
+  <input type="number" id="nC">
+  <button onclick="generateRandomNumbersWithSum()">Generate and Calculate</button>
+  <p id="randomResultC"></p>
+
+  <script>
+    const calculateSum = () => {
+      const x = document.getElementById('x').value;
+      const y = document.getElementById('y').value;
+
+      const xhr = new XMLHttpRequest();
+      xhr.open('POST', 'http://localhost:3000/sum', true);
+      
+      xhr.setRequestHeader('Content-Type', 'application/json');
+      xhr.setRequestHeader('X-Value-x', x);
+      xhr.setRequestHeader('X-Value-y', y);
+
+      xhr.onload = function() {
+        if (xhr.status === 200  ) {
+          const z = xhr.getResponseHeader("X-Value-z");
+          document.getElementById('sumResult').innerText = `The sum of x and y is: ${z}`;
+        } else {
+          console.error('Error:', xhr.statusText);
+          document.getElementById('sumResult').innerText = 'Error occurred. Please try again.';
+        }
+      };
+
+      xhr.onerror = function() {
+        console.error('Network error');
+        document.getElementById('result').innerText = 'Network error. Please try again.';
+      };
+
+      xhr.send();
+    }
+     const generateRandomNumbersWithSum = () => {
+      const n = document.getElementById('nC').value;
+      const x = document.getElementById('xC').value;
+      const y = document.getElementById('yC').value;
+
+      const xhr = new XMLHttpRequest();
+      xhr.open('POST', 'http://localhost:3000/randomSum', true);
+      
+      xhr.setRequestHeader('Content-Type', 'application/json');
+      xhr.setRequestHeader('X-Value-x', x);
+      xhr.setRequestHeader('X-Value-y', y);
+      xhr.setRequestHeader('X-Rand-N', n);
+
+      xhr.onload = function() {
+        if (xhr.status === 200) {
+          const z = xhr.getResponseHeader("X-Value-z");
+          document.getElementById('sumResultC').innerText = `The sum of x and y is: ${z}`;
+          const data = JSON.parse(xhr.responseText);
+          document.getElementById('randomResultC').innerText = JSON.stringify(data);
+        } else {
+          console.error('Error:', xhr.statusText);
+          document.getElementById('sumResultC').innerText = 'Error occurred. Please try again.';
+          document.getElementById('randomResultC').innerText = 'Error occurred. Please try again.';
+        }
+      };
+
+      xhr.onerror = function() {
+        console.error('Network error');
+        document.getElementById('result').innerText = 'Network error. Please try again.';
+      };
+
+      xhr.send();
+    }
+    const generateRandomNumbers = () => {
+      const n = document.getElementById('n').value;
+      const xhr = new XMLHttpRequest();
+      xhr.open('POST', 'http://localhost:3000/random', true);
+      
+      xhr.setRequestHeader('X-Rand-N', n);
+
+      xhr.onload = function() {
+        if (xhr.status === 200) {
+          const data = JSON.parse(xhr.responseText);
+          document.getElementById('randomResult').innerText = JSON.stringify(data);
+        } else {
+          console.error('Error:', xhr.statusText);
+          document.getElementById('randomResult').innerText = 'Error occurred. Please try again.';
+        }
+      };
+
+      xhr.onerror = function() {
+        console.error('Network error');
+        document.getElementById('randomResult').innerText = 'Network error. Please try again.';
+      };
+
+      xhr.send();
+    }
+  </script>
+</body>
+</html>

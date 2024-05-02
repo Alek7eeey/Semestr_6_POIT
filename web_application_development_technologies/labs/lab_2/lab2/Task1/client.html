@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sum Calculator</title>
+</head>
+<body>
+  <h1>Sum Calculator</h1>
+  <label for="x">Value of x:</label>
+  <input type="number" id="x">
+  <br>
+  <label for="y">Value of y:</label>
+  <input type="number" id="y">
+  <br>
+  <button onclick="calculateSum()">Calculate Sum</button>
+  <p id="result"></p>
+
+  <script>
+    const calculateSum = () =>{
+      const x = document.getElementById('x').value;
+      const y = document.getElementById('y').value;
+
+      const xhr = new XMLHttpRequest();
+      xhr.open('POST', 'http://localhost:3000', true);
+      
+      xhr.setRequestHeader('Content-Type', 'application/json');
+      xhr.setRequestHeader('X-Value-x', x);
+      xhr.setRequestHeader('X-Value-y', y);
+
+      xhr.onload = function() {
+        if (xhr.status === 200) {
+          const z = xhr.getResponseHeader("X-Value-z");
+          document.getElementById('result').innerText = `The sum of x and y is: ${z}`;
+        } else {
+          console.error('Error:', xhr.statusText);
+          document.getElementById('result').innerText = 'Error occurred. Please try again.';
+        }
+      };
+
+      xhr.onerror = function() {
+        console.error('Network error');
+        document.getElementById('result').innerText = 'Network error. Please try again.';
+      };
+
+      xhr.send();
+    }
+  </script>
+</body>
+</html>

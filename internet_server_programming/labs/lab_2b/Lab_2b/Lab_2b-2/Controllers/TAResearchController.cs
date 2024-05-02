@@ -5,7 +5,7 @@ namespace Lab_2b_2.Controllers
 	[Route("it")]
 	public class TAResearchController : Controller
 	{
-		[HttpGet("{n:int}/{str}", Order =1)]
+		[HttpGet("{n:int}/{str}")]
 		public IActionResult M04(int? n, string? str)
 		{
 			try
@@ -31,7 +31,7 @@ namespace Lab_2b_2.Controllers
 			}
 		}
 
-		[AcceptVerbs("DELETE", "GET"), Route("{f:float}/{str::length(2, 5)}", Order = 2)]
+		[AcceptVerbs("DELETE", "GET"), Route("{f:float}/{str::length(2, 5)}")]
 		public IActionResult M06(float? f, string? str)
 		{
 			try
@@ -44,7 +44,7 @@ namespace Lab_2b_2.Controllers
 			}
 		}
 
-		[HttpPut("{letters::lettersWithLengthCheck}/{n::range(100, 200)}")]
+		[HttpPut("{letters::length(3, 4)::alpha}/{n::range(100, 200)}")]
 		public IActionResult M07(string? letters, int? n)
 		{
 			try
