@@ -1,0 +1,59 @@
+﻿@page
+@model Lab_4.Pages.Link.IndexModel
+@using Lab_4.Utils
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1 class="display-4 mb-4">Link</h1>
+
+<form method="post" class="mt-3 mb-3">
+    @if (Security.CheckIsAdmin(this.HttpContext))
+    {
+        <button type="submit" class="btn btn-danger mr-2" asp-page-handler="ClearCookies">Logout</button>
+    }
+</form>
+
+
+<p>
+    @if (Security.CheckIsAdmin(this.HttpContext))
+    {
+        <a asp-page="Create" class="btn btn-primary">Create New</a>
+    }
+    <a asp-page="Find" class="btn btn-primary">Find URL</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>URL</th>
+            <th>Key</th>
+            <th>Minus</th>
+            <th>Plus</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Link)
+        {
+            <tr>
+                <td>
+                    <a href="@item.Url">@Html.DisplayFor(modelItem => item.Url)</a>
+                </td>
+                <td>@Html.DisplayFor(modelItem => item.Description)</td>
+                <td>@Html.DisplayFor(modelItem => item.Minus)</td>
+                <td>@Html.DisplayFor(modelItem => item.Plus)</td>
+                <td>
+                    @if (Security.CheckIsAdmin(this.HttpContext))
+                    {
+                        <a asp-page="./Edit" asp-route-id="@item.Id" class="btn btn-primary">Edit</a>
+                        <a asp-page="./Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
+                    }
+                    <a asp-page="./Details" asp-route-id="@item.Id" class="btn btn-info">Details</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+

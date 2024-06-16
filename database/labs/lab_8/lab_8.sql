@@ -1,4 +1,4 @@
-CREATE TYPE Employee_Type AS OBJECT (
+CREATE or replace TYPE Employee_Type AS OBJECT (
     ID NUMBER,
     First_Name NVARCHAR2(100),
     Last_Name NVARCHAR2(100),
@@ -17,10 +17,13 @@ CREATE TYPE Employee_Type AS OBJECT (
     ) RETURN SELF AS RESULT,
     MAP MEMBER FUNCTION compare RETURN NUMBER,
     MEMBER FUNCTION getFullName RETURN NVARCHAR2,
-    PROCEDURE printDetails
+    MEMBER PROCEDURE printDetails
 );
 /
-CREATE TYPE BODY Employee_Type AS
+--DROP TYPE Employee_Type;
+--DROP TYPE Business_Trip_Type;
+
+CREATE or replace TYPE BODY Employee_Type AS
     CONSTRUCTOR FUNCTION Employee_Type (
         ID NUMBER,
         First_Name NVARCHAR2,
@@ -48,7 +51,7 @@ CREATE TYPE BODY Employee_Type AS
     BEGIN
         RETURN First_Name || ' ' || Last_Name;
     END getFullName;
-    PROCEDURE printDetails IS
+    member PROCEDURE printDetails IS
     BEGIN
         DBMS_OUTPUT.PUT_LINE('ID: ' || ID);
         DBMS_OUTPUT.PUT_LINE('Name: ' || getFullName);
@@ -61,7 +64,7 @@ END;
 /
 
 //-------------
-CREATE TYPE Business_Trip_Type AS OBJECT (
+CREATE or replace TYPE Business_Trip_Type AS OBJECT (
     ID NUMBER,
     Employee_ID NUMBER,
     Location NVARCHAR2(100),
@@ -76,10 +79,10 @@ CREATE TYPE Business_Trip_Type AS OBJECT (
     ) RETURN SELF AS RESULT,
     MAP MEMBER FUNCTION compare RETURN NUMBER,
     MEMBER FUNCTION tripDuration RETURN NUMBER,
-    PROCEDURE printDetails
+    MEMBER PROCEDURE printDetails
 );
 /
-CREATE TYPE BODY Business_Trip_Type AS
+CREATE or replace TYPE BODY Business_Trip_Type AS
     CONSTRUCTOR FUNCTION Business_Trip_Type (
         ID NUMBER,
         Employee_ID NUMBER,
@@ -103,7 +106,7 @@ CREATE TYPE BODY Business_Trip_Type AS
     BEGIN
         RETURN ROUND((End_Date - Start_Date));
     END tripDuration;
-    PROCEDURE printDetails IS
+    member PROCEDURE printDetails IS
     BEGIN
         DBMS_OUTPUT.PUT_LINE('ID: ' || ID);
         DBMS_OUTPUT.PUT_LINE('Employee ID: ' || Employee_ID);
@@ -113,8 +116,6 @@ CREATE TYPE BODY Business_Trip_Type AS
     END printDetails;
 END;
 /
-
-
 --- =======================
 DECLARE
     emp1 Employee_Type;
@@ -140,8 +141,13 @@ END;
 /
 
 -- ===============
-CREATE INDEX employee_id_index ON TABLE(Employee_Type) (ID);
+create index employee_id_index on TABLE(Employee_Type) (Employee_Type.id);
 
 CREATE INDEX trip_id_index ON TABLE(Business_Trip_Type) (ID);
 
 CREATE INDEX trip_duration_index ON TABLE(Business_Trip_Type) (tripDuration);
+
+-- *****************************
+CREATE TABLE Employee_Table(
+    empl Employee_Type
+);

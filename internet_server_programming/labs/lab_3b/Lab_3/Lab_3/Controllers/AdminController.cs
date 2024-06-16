@@ -1,16 +1,17 @@
-﻿using lab3b_vd.Attributes;
-using lab3b_vd.Data;
-using lab3b_vd.DTO.Admin;
-using lab3b_vd.Exceptions;
-using lab3b_vd.Models;
+﻿using Lab_3b.Attributes;
+using Lab_3b.DTO.Admin;
+using Lab_3b.Exceptions;
+using Lab_3b.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace lab3b_vd.Controllers;
+namespace Lab_3b.Controllers;
 
 [Route("Admin")]
+[CheckOnExist]
+[ReAuthorize]
 public class AdminController : Controller
 {
     private readonly UserManager<User> userManager;
@@ -74,8 +75,6 @@ public class AdminController : Controller
         }
     }
 
-
-
     [HttpGet("SignIn")]
     [NonAuthorize]
     [ControllerAction]
@@ -117,8 +116,6 @@ public class AdminController : Controller
         }
     }
 
-
-
     [HttpGet("SignOut")]
     [Authorize]
     [ControllerAction]
@@ -143,7 +140,6 @@ public class AdminController : Controller
         }
     }
 
-
     [HttpGet("CreateUser")]
     [Authorize(Roles = "Administrator")]
     [ControllerAction]
@@ -159,8 +155,6 @@ public class AdminController : Controller
         ViewBag.View = "CreateUser";
         return await Register(dto);
     }
-
-
 
     [HttpGet("DeleteUser")]
     [Authorize(Roles = "Administrator")]
@@ -234,8 +228,6 @@ public class AdminController : Controller
         return View();
     }
 
-
-
     [HttpGet("Assign")]
     [Authorize(Roles = "Administrator")]
     [ControllerAction]
@@ -294,7 +286,6 @@ public class AdminController : Controller
         }
     }
 
-
     [HttpGet("CreateRole")]
     [Authorize(Roles = "Administrator")]
     [ControllerAction]
@@ -338,7 +329,6 @@ public class AdminController : Controller
         return View();
     }
 
-
     [HttpGet("DeleteRole")]
     [Authorize(Roles = "Administrator")]
     [ControllerAction]
@@ -378,8 +368,6 @@ public class AdminController : Controller
             return View();
         }
     }
-
-
 
     [HttpGet("Error")]
     [ControllerAction]

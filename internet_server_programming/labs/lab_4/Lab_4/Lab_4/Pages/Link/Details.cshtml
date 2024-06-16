@@ -1,0 +1,75 @@
+﻿@page
+@model Lab_4.Pages.Link.DetailsModel
+@using Lab_4.Utils
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1 class="display-4 mb-4">Details</h1>
+
+<div>
+    <a>
+        <h4>Link</h4>
+        <hr class="my-4" />
+        <dl class="row">
+            <dt class="col-sm-2">URL</dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Link.Url)
+            </dd>
+            <dt class="col-sm-2">Key</dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Link.Description)
+            </dd>
+            <dt class="col-sm-2">Minus</dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Link.Minus)
+                <form method="post">
+                    <button type="submit" class="btn btn-danger btn-sm" asp-page-handler="OnMinus" asp-route-id="@Model.Link.Id">Minus One</button>
+                </form>
+            </dd>
+            <dt class="col-sm-2">Plus</dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Link.Plus)
+                <form method="post">
+                    <button type="submit" class="btn btn-success btn-sm" asp-page-handler="OnPlus" asp-route-id="@Model.Link.Id">Plus One</button>
+                </form>
+            </dd>
+        </dl>
+    </a>
+</div>
+
+<div class="mt-4">
+    <a asp-page="../Comment/Create" asp-route-id="@Model.Link?.Id" class="btn btn-primary">Create comment</a>
+</div>
+
+<div class="mt-4 overflow-auto" style="max-height: 300px;">
+    <div class="row">
+        @foreach (var item in Model.Link.Comments)
+        {
+            <div class="col-md-4 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">@item.SessionId</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">@item.Stamp</h6>
+                        <p class="card-text">@item.Text</p>
+                        <div>
+                            @if (Security.CheckIsCommentUser(this.HttpContext, item))
+                            {
+                                <a asp-page="../Comment/Edit" asp-route-id="@item.Id" class="btn btn-primary btn-sm mr-2">Edit</a>
+                                <a asp-page="../Comment/Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm">Delete</a>
+                            }
+                            <a asp-page="../Comment/Details" asp-route-id="@item.Id" class="btn btn-info btn-sm ml-2">Details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+
+<div class="mt-4">
+    <a asp-page="./Index" class="btn btn-secondary">Back to List</a>
+</div>
+

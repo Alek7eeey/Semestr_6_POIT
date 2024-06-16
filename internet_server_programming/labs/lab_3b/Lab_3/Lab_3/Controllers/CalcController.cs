@@ -1,10 +1,13 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Lab_3b.Attributes;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace lab3b_vd.Controllers;
+namespace Lab_3b.Controllers;
 
-/*[Authorize(Roles = "Employee,Master")]
-*/public class CalcController : Controller
+[Authorize(Roles = "Employee,Master")]
+[CheckOnExist]
+[ReAuthorize]
+public class CalcController : Controller
 {
     public IActionResult Index(float x, float y, float z, string press = "+")
     {

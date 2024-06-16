@@ -1,12 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace lab3b_vd.DTO.Admin;
+namespace Lab_3b.DTO.Admin;
 
 public class ChangePasswordDto
 {
     public string Password { get; set; }
-
-    [MinLength(2, ErrorMessage = "name should be more then 2 letters")]
-    [MaxLength(20, ErrorMessage = "name should be less then 20 letters")]
+    [MinLength(2, ErrorMessage = "password lenght should be from to 2 to 20 elements")]
+    [MaxLength(20, ErrorMessage = "password lenght should be from to 2 to 20 elements")]
     public string NewPassword { get; set; }
 }

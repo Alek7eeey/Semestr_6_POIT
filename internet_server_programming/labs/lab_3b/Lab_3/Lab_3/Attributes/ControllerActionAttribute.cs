@@ -1,12 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace lab3b_vd.Attributes;
+namespace Lab_3b.Attributes;
 
 public class ControllerActionAttribute : ActionFilterAttribute
 {
     public override void OnActionExecuting(ActionExecutingContext context)
     {
-        // get query parameters _action and _controller
         var query = context.HttpContext.Request.Query;
         query.TryGetValue("_action", out var action);
         query.TryGetValue("_controller", out var controller);

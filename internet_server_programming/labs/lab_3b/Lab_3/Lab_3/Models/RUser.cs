@@ -1,4 +1,4 @@
-﻿namespace lab3b_vd.Models;
+﻿namespace Lab_3b.Models;
 
 public class RUser : User
 {

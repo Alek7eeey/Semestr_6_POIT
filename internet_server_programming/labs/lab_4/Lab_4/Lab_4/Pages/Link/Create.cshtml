@@ -1,0 +1,40 @@
+﻿@page
+@model Lab_4.Pages.Link.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1 class="display-4 mb-4">Create</h1>
+
+<h4>Link</h4>
+<hr class="my-4" />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Link.Url" class="control-label"></label>
+                <input asp-for="Link.Url" class="form-control" />
+                <span asp-validation-for="Link.Url" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Link.Description" class="control-label"></label>
+                <input asp-for="Link.Description" class="form-control" />
+                <span asp-validation-for="Link.Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index" class="btn btn-secondary">Back to List</a>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

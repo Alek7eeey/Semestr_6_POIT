@@ -77,9 +77,10 @@ D:\studing\6_semestr\internet_server_programming\labs\lab_3b\Lab_3\Lab_3\obj\Deb
 D:\studing\6_semestr\internet_server_programming\labs\lab_3b\Lab_3\Lab_3\obj\Debug\net7.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
 D:\studing\6_semestr\internet_server_programming\labs\lab_3b\Lab_3\Lab_3\obj\Debug\net7.0\scopedcss\bundle\Lab_3.styles.css
 D:\studing\6_semestr\internet_server_programming\labs\lab_3b\Lab_3\Lab_3\obj\Debug\net7.0\scopedcss\projectbundle\Lab_3.bundle.scp.css
-D:\studing\6_semestr\internet_server_programming\labs\lab_3b\Lab_3\Lab_3\obj\Debug\net7.0\Lab_3.csproj.CopyComplete
 D:\studing\6_semestr\internet_server_programming\labs\lab_3b\Lab_3\Lab_3\obj\Debug\net7.0\Lab_3.dll
 D:\studing\6_semestr\internet_server_programming\labs\lab_3b\Lab_3\Lab_3\obj\Debug\net7.0\refint\Lab_3.dll
 D:\studing\6_semestr\internet_server_programming\labs\lab_3b\Lab_3\Lab_3\obj\Debug\net7.0\Lab_3.pdb
 D:\studing\6_semestr\internet_server_programming\labs\lab_3b\Lab_3\Lab_3\obj\Debug\net7.0\Lab_3.genruntimeconfig.cache
 D:\studing\6_semestr\internet_server_programming\labs\lab_3b\Lab_3\Lab_3\obj\Debug\net7.0\ref\Lab_3.dll
+D:\studing\6_semestr\internet_server_programming\labs\lab_3b\Lab_3\Lab_3\obj\Debug\net7.0\Lab_3.sourcelink.json
+D:\studing\6_semestr\internet_server_programming\labs\lab_3b\Lab_3\Lab_3\obj\Debug\net7.0\Lab_3.csproj.Up2Date

@@ -8,12 +8,7 @@ const token = '6816533295:AAHmV8BKn-pyDuXc8OhIKWMResIDz5b-r58';
 const openWeatherMapApiKey = 'bdb834a8288e06286161c3f84358adbc';
 
 const bot = new TelegramBot(token, { polling: true });
-
-bot.onText(/\/start/, (msg) => {
-    bot.sendMessage(msg.chat.id, "Привет! Я бот, который может отправлять случайные факты, шутки, погоду и многое другое.");
-});
-
-
+let check;
 bot.onText(/\/subscribe/, async (msg) => {
     const chatId = msg.chat.id;
     const userId = msg.from.id;
@@ -39,11 +34,11 @@ bot.onText(/\/subscribe/, async (msg) => {
 
         bot.sendMessage(chatId, "Вы успешно подписались на ежедневную рассылку случайных фактов!");
 
-        /*cron.schedule('55 22 * * *', () => { //в 22 52 каждый день
+        /*cron.schedule('00 12 * * *', () => { //в 12 00 каждый день
             sendRandomFact(chatId);
         });*/
 
-        cron.schedule('*/60 * * * * *', () => { //каждые 10 секунд
+        check = cron.schedule('*/10 * * * * *', () => { //каждые 10 секунд
             sendRandomFact(chatId);
         });
 
@@ -52,7 +47,6 @@ bot.onText(/\/subscribe/, async (msg) => {
         bot.sendMessage(chatId, "Не удалось подписаться на рассылку. Пожалуйста, попробуйте еще раз.");
     }
 });
-
 
 bot.onText(/\/unsubscribe/, async (msg) => {
     const chatId = msg.chat.id;
@@ -75,7 +69,7 @@ bot.onText(/\/unsubscribe/, async (msg) => {
                 id: existingSubscriber.id
             }
         });
-
+        check.stop();
         bot.sendMessage(chatId, "Вы успешно отписались от рассылки случайных фактов!");
     } catch (error) {
         console.error('Error unsubscribing:', error.message);

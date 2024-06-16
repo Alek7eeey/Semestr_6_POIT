@@ -2,19 +2,18 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
+<div class="text-center" style="background-color: #343a40; color: #f8f9fa;">
     @if (ViewBag.IsAuthorized == true)
     {
         <p>
-            <strong>Username:</strong> @ViewBag.Username
+            <strong style="color: #ffc107;">Username:</strong> <span style="color: #28a745;">@ViewBag.Username</span>
         </p>
         <p>
-            <strong>Roles:</strong> <span class="badge bg-primary">
-                @foreach (var role in ViewBag.Roles)
-                {
-                    <span class="badge bg-secondary">@role</span>
-                }
-            </span>
+            <strong style="color: #ffc107;">Roles:</strong>
+            @foreach (var role in ViewBag.Roles)
+            {
+                <span class="badge bg-dark" style="background-color: #6c757d;">@role</span>
+            }
         </p>
     }
 </div>

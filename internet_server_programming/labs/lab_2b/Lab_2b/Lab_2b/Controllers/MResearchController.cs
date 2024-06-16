@@ -4,7 +4,7 @@ namespace Lab_2b.Controllers
 {
 	public class MResearchController : Controller
 	{
-		[HttpGet, Route("/MView")]
+		[HttpGet, Route("/MView", Order = 2)]
 		public IActionResult MView()
 		{
 			return View();

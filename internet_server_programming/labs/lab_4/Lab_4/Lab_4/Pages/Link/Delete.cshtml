@@ -1,0 +1,38 @@
+﻿@page
+@model Lab_4.Pages.Link.DeleteModel
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1 class="display-4 mb-4">Delete</h1>
+
+<div>
+    <h4>Link</h4>
+    <hr class="my-4" />
+    <dl class="row">
+        <dt class="col-sm-2">url</dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Link.Url)
+        </dd>
+        <dt class="col-sm-2">key</dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Link.Description)
+        </dd>
+        <dt class="col-sm-2">minus</dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Link.Minus)
+        </dd>
+        <dt class="col-sm-2">plus</dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Link.Plus)
+        </dd>
+    </dl>
+
+    <form method="post">
+        <input type="hidden" asp-for="Link.Id" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-page="./Index" class="btn btn-secondary">Back to List</a>
+    </form>
+</div>
+

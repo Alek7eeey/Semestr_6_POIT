@@ -1,0 +1,106 @@
+db.Trips.find({ "Сотрудник_ID": { $gt: 1 } })
+db.Trips.find({
+  Места_посещения: 'Сочи'
+});
+db.Trips.find({ "Вид_отпуска": { $exists: true } })
+db.Trips.find({ "Дата_начала": { $type: "string" } })
+db.Trips.find({ "Вид_отпуска": { $regex: /^An/ } })
+db.Trips.find({ Вид_отпуска: { $regex: /^Ad/ } }, { Дата_начала: 1, Дата_окончания: 1 })
+db.Trips.countDocuments()
+db.Trips.find().limit(2)
+db.Trips.find().skip(1).limit(2)
+db.Trips.distinct("Вид_отпуска")
+
+db.Trips.aggregate([
+  {
+    $group: {
+      _id: null,
+      totalTtrips: { $sum: 1 }
+    }
+  }
+])
+
+db.Trips.aggregate([
+  {
+    $group: {
+      _id: "$Сотрудник_ID",
+      count: { $sum: 1 }
+    }
+  }
+])
+
+db.Trips.aggregate([
+  {
+    $match: {}
+  },
+  {
+    $group: {
+      _id: { Дата_начала: "$Дата_начала", Дата_окончания: "$Дата_окончания" },
+      count: { $sum: 1 }
+    }
+  }
+])
+
+db.Trips.aggregate([
+  {
+    $match: { Сотрудник_ID: { $gt: 1 } } // Непустой фильтр
+  },
+  {
+    $group: {
+      _id: { Дата_начала: "$Дата_начала", Дата_окончания: "$Дата_окончания" },
+      count: { $sum: 1 }
+    }
+  }
+])
+
+/////////////////////////////////
+
+People:
+db.People.find({ "Образование_ID": { $gt: 2 } })
+db.People.find({
+  Хобби: 'Плавание'
+});
+db.People.find({ "Пол": { $exists: true } })
+db.People.find({ "Имя": { $type: "string" } })
+db.People.find({ "Фамилия": { $regex: /^G/ } })
+db.People.find({ 
+Страховой_полюс_ID: { $gt: 2 } }, { Имя: 1, Фамилия: 1 })
+db.People.countDocuments()
+db.People.find().limit(2)
+db.People.find().skip(1).limit(2)
+db.People.distinct("Имя")
+
+db.People.aggregate([
+  {
+    $group: {
+      _id: null,
+      totalPeople: { $sum: 1 }
+    }
+  }
+])
+
+
+db.People.aggregate([
+  {
+    $match: {}
+  },
+  {
+    $group: {
+      _id: { Имя: "$Имя", Фамилия: "$Фамилия" }
+    }
+  }
+])
+
+db.People.aggregate([
+  {
+    $match: { ID: { $gt: 1 } }
+  },
+   {
+    $group: {
+      _id: { Имя: "$Имя", Фамилия: "$Фамилия" }
+    }
+  }
+])
+
+
+

@@ -1,9 +1,9 @@
-﻿using lab3b_vd.Models;
+﻿using Lab_3b.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace lab3b_vd.Data;
+namespace Lab_3b.Data;
 
 public class AppDbContext : IdentityDbContext<User>
 {

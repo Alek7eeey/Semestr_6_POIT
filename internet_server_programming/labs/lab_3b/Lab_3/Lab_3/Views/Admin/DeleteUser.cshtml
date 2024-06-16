@@ -1,15 +1,15 @@
 ﻿@model IEnumerable<string>
 
-<div class="min-vw-100 d-flex flex-column align-items-center justify-content-center">
-    <h1 class="h1">Delete user</h1>
-    <form class="d-flex flex-column gap-3 w-75 border-1 rounded-2 border bg-opacity-25 p-3" method="post" action="/Admin/DeleteUser">
-        <select class="form-select" name="username">
-            @foreach(var name in Model)
+<div class="min-vw-100 d-flex flex-column align-items-center justify-content-center" style="background-color: #f8f9fa;">
+    <h1 class="h1" style="color: #6c757d;">Delete user</h1>
+    <form class="d-flex flex-column gap-3 w-75 border-1 rounded-2 border bg-opacity-25 p-3" method="post" action="/Admin/DeleteUser" style="background-color: #e9ecef;">
+        <select class="form-select" name="username" style="border-color: #ced4da;">
+            @foreach (var name in Model)
             {
                 <option>@name</option>
             }
         </select>
-        <button type="submit" class="btn btn-danger">Delete</button>
+        <button type="submit" class="btn btn-danger" style="background-color: #dc3545; border-color: #dc3545;">Delete</button>
 
         @await Html.PartialAsync("ErrorsBlock")
     </form>

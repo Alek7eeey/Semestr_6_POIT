@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace lab3b_vd.Attributes;
+namespace Lab_3b.Attributes;
 
 public class NonAuthorizeAttribute : ActionFilterAttribute
 {

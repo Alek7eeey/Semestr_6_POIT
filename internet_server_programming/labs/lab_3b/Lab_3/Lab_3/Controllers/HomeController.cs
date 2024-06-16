@@ -1,10 +1,13 @@
-using lab3b_vd.Models;
+using Lab_3b.Attributes;
+using Lab_3b.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
-namespace lab3b_vd.Controllers
+namespace Lab_3b.Controllers
 {
+    [CheckOnExist]
+    [ReAuthorize]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -26,6 +29,11 @@ namespace lab3b_vd.Controllers
                     return View();
 
                 var user = await userManager.GetUserAsync(User);
+                if (user == null)
+                {
+                    throw new Exception("cant find that user");
+                }
+
                 ViewBag.IsAuthorized = true;
                 ViewBag.Username = user.UserName;
                 ViewBag.Roles = await userManager.GetRolesAsync(user);
@@ -34,11 +42,6 @@ namespace lab3b_vd.Controllers
             {
                 await Console.Out.WriteLineAsync(e.Message);
             }
-            return View();
-        }
-
-        public IActionResult Privacy()
-        {
             return View();
         }
 

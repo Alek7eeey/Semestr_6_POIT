@@ -64,6 +64,9 @@ CREATE TABLE Зарплаты (
     FOREIGN KEY (Сотрудник_ID) REFERENCES Сотрудники(ID)
 );
 
+select *
+from Отпуска for json path;
+
 CREATE TABLE Командировки (
     ID INT PRIMARY KEY,
     Сотрудник_ID INT,

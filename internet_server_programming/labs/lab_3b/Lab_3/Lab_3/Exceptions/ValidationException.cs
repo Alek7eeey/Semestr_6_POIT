@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
 
-namespace lab3b_vd.Exceptions;
+namespace Lab_3b.Exceptions;
 
 public class ValidationException : Exception
 {

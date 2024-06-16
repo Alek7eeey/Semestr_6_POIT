@@ -10,15 +10,13 @@ build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = Lab_3
 build_property.RootNamespace = Lab_3
 build_property.ProjectDir = D:\studing\6_semestr\internet_server_programming\labs\lab_3b\Lab_3\Lab_3\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 7.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
 build_property.MSBuildProjectDirectory = D:\studing\6_semestr\internet_server_programming\labs\lab_3b\Lab_3\Lab_3
 build_property._RazorSourceGeneratorDebug = 
-
-[D:/studing/6_semestr/internet_server_programming/labs/lab_3b/Lab_3/Lab_3/Areas/Identity/Pages/_ViewStart.cshtml]
-build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcX1ZpZXdTdGFydC5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
 
 [D:/studing/6_semestr/internet_server_programming/labs/lab_3b/Lab_3/Lab_3/Views/Admin/Assign.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cQXNzaWduLmNzaHRtbA==
@@ -64,12 +62,12 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2FsY1xDYWxjLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/studing/6_semestr/internet_server_programming/labs/lab_3b/Lab_3/Lab_3/Views/Home/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
+[D:/studing/6_semestr/internet_server_programming/labs/lab_3b/Lab_3/Lab_3/Views/Error/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRXJyb3JcRXJyb3IuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/studing/6_semestr/internet_server_programming/labs/lab_3b/Lab_3/Lab_3/Views/Home/Privacy.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
+[D:/studing/6_semestr/internet_server_programming/labs/lab_3b/Lab_3/Lab_3/Views/Home/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/studing/6_semestr/internet_server_programming/labs/lab_3b/Lab_3/Lab_3/Views/Shared/Error.cshtml]

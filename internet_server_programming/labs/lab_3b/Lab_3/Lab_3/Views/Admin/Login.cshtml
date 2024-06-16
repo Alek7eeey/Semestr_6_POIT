@@ -1,14 +1,14 @@
-﻿<div class="min-vw-100 d-flex flex-column align-items-center justify-content-center">
-    <form class="d-flex flex-column gap-3 w-50 border rounded border-primary bg-light p-3" method="post" action="/Admin/SignIn">
+﻿<div class="min-vw-100 d-flex flex-column align-items-center justify-content-center" style="background-color: #f8f9fa;">
+    <form class="d-flex flex-column gap-3 w-50 border rounded border-primary bg-light p-3" method="post" action="/Admin/SignIn" style="background-color: #e9ecef; border-color: #007bff;">
         <div class="form-group">
-            <label class="text-dark">Username:</label>
-            <input class="form-control" name="username" value="@ViewBag.Username" />
+            <label class="text-dark" style="color: #495057;">Username:</label>
+            <input class="form-control" name="username" value="@ViewBag.Username" style="border-color: #ced4da;" />
         </div>
         <div class="form-group">
-            <label class="text-dark">Password:</label>
-            <input type="password" class="form-control" name="password" value="@ViewBag.Password" />
+            <label class="text-dark" style="color: #495057;">Password:</label>
+            <input type="password" class="form-control" name="password" value="@ViewBag.Password" style="border-color: #ced4da;" />
         </div>
-        <button type="submit" class="btn btn-primary btn-block">Login</button>
+        <button type="submit" class="btn btn-primary btn-block" style="background-color: #007bff; border-color: #007bff;">Login</button>
 
         @await Html.PartialAsync("ErrorsBlock")
     </form>

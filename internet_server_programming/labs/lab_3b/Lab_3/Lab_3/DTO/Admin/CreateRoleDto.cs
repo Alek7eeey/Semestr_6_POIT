@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace lab3b_vd.DTO.Admin;
+namespace Lab_3b.DTO.Admin;
 
 public class CreateRoleDto
 {
